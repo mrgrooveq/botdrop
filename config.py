@@ -16,13 +16,13 @@ DROP_COOLDOWN = 10
 TEMPORARY_ROLES = {
     '1': 1482810875843969285,  # CAM 10
     '2': 1482810990218187057,  # CAPITÃO
-    '3': None                  # Pic Perm
+    '3': 1483099534765592679   # Perm. Amistosos
 }
 
 ROLE_NAMES = {
     '1': 'CAM 10',
     '2': 'CAPITÃO',
-    '3': 'Pic Perm'
+    '3': 'Perm. Amistosos'
 }
 
 # Cargos autorizados a usar /startdrop, /stopdrop e /cargosdrops
