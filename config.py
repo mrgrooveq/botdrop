@@ -2,7 +2,7 @@
 # config.py — ÁREA DE CONFIGURAÇÃO
 # ============================================
 
-TOKEN = 'MTQ4MjgzMzcxOTQ0NTQyNjMyNw.GgBNz4.rD6NT4Enan77eEbGUNWbNbRTLEYuZiFbo_zJHM'
+TOKEN = 'MTQ4MjgzMzcxOTQ0NTQyNjMyNw.GybM21.XVe9g1QCTs1TtfEAjkwgyZmXcPM-IeWaiVfMNg'
 
 GUILD_ID = 1474506579247104002
 
