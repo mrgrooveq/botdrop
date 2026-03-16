@@ -2,7 +2,8 @@
 # config.py — ÁREA DE CONFIGURAÇÃO
 # ============================================
 
-TOKEN = 'MTQ4MjgzMzcxOTQ0NTQyNjMyNw.GybM21.XVe9g1QCTs1TtfEAjkwgyZmXcPM-IeWaiVfMNg'
+import os
+TOKEN = os.getenv("TOKEN")
 
 GUILD_ID = 1474506579247104002
 
