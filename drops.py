@@ -29,7 +29,7 @@ async def send_drop(channel: discord.TextChannel, question_text: str, answers_li
             f"-# **{bot_data.current_question}**\n"
             f"\n"
             f"Responda no chat em até **2 minutos** para ganhar um cargo\n"
-            f"(CAM 10 Ou CAPITÃO)"
+            f"(Cam 10, Capitão, Perm. Amistosos ou Perm. Drops)"
         ),
         color=discord.Color.gold()
     )
