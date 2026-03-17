@@ -151,11 +151,30 @@ async def handle_winner_dm(bot: discord.Client, message: discord.Message):
             role_name = ROLE_NAMES[msg.content]
 
             if await assign_temporary_role(bot, message.author.id, role_id):
+                # Embed de confirmação
                 await dm.send(embed=discord.Embed(
                     title="✅ Prêmio Atribuído!",
                     description=f"Você recebeu o cargo **{role_name}** por **5 dias**!",
                     color=discord.Color.green()
                 ))
+
+                # Se escolheu Perm. Drop, envia tutorial
+                if role_name == ROLE_NAMES.get('4'):
+                    await dm.send(embed=discord.Embed(
+                        title="Como usar o comando de Drop",
+                        description=(
+                            "Agora que voce tem o cargo **Perm. Drop**, pode iniciar drops!\n\n"
+                            "**Como usar o /startdrop:**\n"
+                            "> `pergunta` - A pergunta que aparece no drop\n"
+                            "> `resposta` - A resposta correta\n\n"
+                            "**Exemplo:**\n"
+                            "`/startdrop pergunta:Qual a capital do Brasil? resposta:Brasilia`\n\n"
+                            "**Outros comandos:**\n"
+                            "> `/stopdrop` - Encerra o drop antes do tempo\n\n"
+                            "-# Seu cargo expira em 5 dias. Bom uso!"
+                        ),
+                        color=discord.Color.blurple()
+                    ))
             else:
                 await dm.send("❌ Erro ao atribuir o prêmio. Contate um admin.")
 
