@@ -37,8 +37,8 @@ AUTHORIZED_ROLES = {
 
 # Cargos de Dono e Sub-Dono — únicos que podem pausar/despausar drops
 OWNER_ROLES = {
-    # Adicione aqui os IDs dos cargos de Dono e Sub-Dono
-    # Exemplo: 123456789012345678
+    1480951816354004992,
+    1474506816804093965
 }
 
 # Perguntas automáticas do drop
