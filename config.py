@@ -17,7 +17,7 @@ TEMPORARY_ROLES = {
     '1': 1482810875843969285,  # CAM 10
     '2': 1482810990218187057,  # CAPITÃO
     '3': 1483099534765592679,  # Perm. Amistosos
-    '4': 1483288405851770957 # Perm. Drop
+    '4': 1483288405851770957   # Perm. Drop
 }
 
 ROLE_NAMES = {
@@ -33,6 +33,12 @@ AUTHORIZED_ROLES = {
     1474506816804093965,
     1480951816354004992,
     1483288405851770957
+}
+
+# Cargos de Dono e Sub-Dono — únicos que podem pausar/despausar drops
+OWNER_ROLES = {
+    # Adicione aqui os IDs dos cargos de Dono e Sub-Dono
+    # Exemplo: 123456789012345678
 }
 
 # Perguntas automáticas do drop

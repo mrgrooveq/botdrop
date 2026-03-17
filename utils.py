@@ -20,3 +20,8 @@ def normalize_answer(text: str) -> str:
 def has_authorized_role(member: discord.Member) -> bool:
     """Verifica se o membro tem algum cargo autorizado."""
     return any(role.id in AUTHORIZED_ROLES for role in member.roles)
+
+def has_owner_role(member: discord.Member) -> bool:
+    """Verifica se o membro tem cargo de Dono ou Sub-Dono."""
+    from config import OWNER_ROLES
+    return any(role.id in OWNER_ROLES for role in member.roles)

@@ -36,6 +36,11 @@ async def on_message(message: discord.Message):
     if message.author.bot:
         return
 
+    # Se drops estiverem pausados, ignora qualquer resposta
+    if bot_data.drops_paused:
+        await bot.process_commands(message)
+        return
+
     if (bot_data.drop_active and
         message.channel.id == bot_data.drop_channel_id and
         message.author.id not in bot_data.answered_users):

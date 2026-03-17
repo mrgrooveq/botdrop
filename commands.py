@@ -8,7 +8,7 @@ from datetime import datetime
 
 from config import GUILD_ID, DROP_COOLDOWN, DROP_CHANNEL_ID, TEMPORARY_ROLES, ROLE_NAMES
 from data import bot_data
-from utils import has_authorized_role
+from utils import has_authorized_role, has_owner_role
 from drops import send_drop
 
 def setup_commands(bot: discord.Client):
@@ -26,6 +26,9 @@ def setup_commands(bot: discord.Client):
     async def startdrop(interaction: discord.Interaction, pergunta: str, resposta: str):
         if not has_authorized_role(interaction.user):
             await interaction.response.send_message("❌ Você não tem permissão!", ephemeral=True)
+            return
+        if bot_data.drops_paused:
+            await interaction.response.send_message("⏸️ Os drops estão pausados! Apenas Donos podem despausar.", ephemeral=True)
             return
         if bot_data.drop_active:
             await interaction.response.send_message("❌ Já existe um drop ativo!", ephemeral=True)
@@ -170,3 +173,69 @@ def setup_commands(bot: discord.Client):
         view = CargosView()
         await interaction.response.defer(ephemeral=True)
         await interaction.followup.send(embed=build_embed(), view=view, ephemeral=True)
+
+    # ── /pausardrops ────────────────────────────────────
+    @bot.tree.command(
+        name="pausardrops",
+        description="Pausa ou despausa o sistema de drops (apenas Dono/Sub-Dono).",
+        guild=discord.Object(id=GUILD_ID)
+    )
+    async def pausardrops(interaction: discord.Interaction):
+        if not has_owner_role(interaction.user):
+            await interaction.response.send_message(
+                "❌ Apenas Donos e Sub-Donos podem usar este comando!", ephemeral=True
+            )
+            return
+
+        def build_painel():
+            status = "⏸️ **PAUSADO**" if bot_data.drops_paused else "▶️ **ATIVO**"
+            cor = discord.Color.red() if bot_data.drops_paused else discord.Color.green()
+            embed = discord.Embed(
+                title="⚙️ Controle de Drops",
+                description=f"Status atual dos drops: {status}\n\nEscolha uma ação abaixo.",
+                color=cor
+            )
+            embed.set_footer(text="Apenas Donos e Sub-Donos podem interagir.")
+            return embed
+
+        class PausarButton(discord.ui.Button):
+            def __init__(self):
+                super().__init__(
+                    label="⏸️ Pausar Drops",
+                    style=discord.ButtonStyle.danger,
+                    disabled=bot_data.drops_paused
+                )
+
+            async def callback(self, btn: discord.Interaction):
+                if not has_owner_role(btn.user):
+                    await btn.response.send_message("❌ Sem permissão.", ephemeral=True)
+                    return
+                bot_data.drops_paused = True
+                bot_data.save_data()
+                print("⏸️ Drops pausados.")
+                await btn.response.edit_message(embed=build_painel(), view=build_view())
+
+        class DespausarButton(discord.ui.Button):
+            def __init__(self):
+                super().__init__(
+                    label="▶️ Despausar Drops",
+                    style=discord.ButtonStyle.success,
+                    disabled=not bot_data.drops_paused
+                )
+
+            async def callback(self, btn: discord.Interaction):
+                if not has_owner_role(btn.user):
+                    await btn.response.send_message("❌ Sem permissão.", ephemeral=True)
+                    return
+                bot_data.drops_paused = False
+                bot_data.save_data()
+                print("▶️ Drops despausados.")
+                await btn.response.edit_message(embed=build_painel(), view=build_view())
+
+        def build_view():
+            view = discord.ui.View(timeout=120)
+            view.add_item(PausarButton())
+            view.add_item(DespausarButton())
+            return view
+
+        await interaction.response.send_message(embed=build_painel(), view=build_view(), ephemeral=True)
