@@ -11,6 +11,10 @@ from data import bot_data
 from utils import normalize_answer
 
 async def send_drop(channel: discord.TextChannel, question_text: str, answers_list: list):
+    if bot_data.drops_paused:
+        print("⏸️ Drops estão pausados, ignorando chamada.")
+        return
+
     bot_data.current_question = question_text
     bot_data.current_answers = [normalize_answer(a) for a in answers_list]
     bot_data.drop_active = True
@@ -25,7 +29,7 @@ async def send_drop(channel: discord.TextChannel, question_text: str, answers_li
             f"-# **{bot_data.current_question}**\n"
             f"\n"
             f"Responda no chat em até **2 minutos** para ganhar um cargo\n"
-            f"(Cam 10, Capitão, Perm. Amistosos ou Perm. Drops)"
+            f"(CAM 10 Ou CAPITÃO)"
         ),
         color=discord.Color.gold()
     )
@@ -35,11 +39,12 @@ async def send_drop(channel: discord.TextChannel, question_text: str, answers_li
     await asyncio.sleep(120)
 
     if bot_data.drop_active:
+        resposta = bot_data.current_answers[0] if bot_data.current_answers else "?"
         bot_data.drop_active = False
         bot_data.save_data()
         await channel.send(embed=discord.Embed(
             title="Tempo Esgotado!",
-            description="Ninguém acertou dessa vez. Tente no próximo drop!",
+            description=f"Ninguém acertou o drop desta vez. A resposta era: **{resposta}**",
             color=discord.Color.red()
         ))
 
