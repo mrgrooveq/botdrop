@@ -16,20 +16,23 @@ DROP_COOLDOWN = 10
 TEMPORARY_ROLES = {
     '1': 1482810875843969285,  # CAM 10
     '2': 1482810990218187057,  # CAPITÃO
-    '3': 1483099534765592679   # Perm. Amistosos
+    '3': 1483099534765592679,  # Perm. Amistosos
+    '4': 1483288405851770957 # Perm. Drop
 }
 
 ROLE_NAMES = {
     '1': 'CAM 10',
     '2': 'CAPITÃO',
-    '3': 'Perm. Amistosos'
+    '3': 'Perm. Amistosos',
+    '4': 'Perm. Drop'
 }
 
 # Cargos autorizados a usar /startdrop, /stopdrop e /cargosdrops
 AUTHORIZED_ROLES = {
     1482822176737595597,
     1474506816804093965,
-    1480951816354004992
+    1480951816354004992,
+    1483288405851770957
 }
 
 # Perguntas automáticas do drop
